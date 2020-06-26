@@ -12,14 +12,6 @@ import { setAlert } from "./alert";
 import axios from "axios";
 import { camelCase } from "lodash";
 
-//Open Drawer
-export const openDrawer = () => (dispatch) =>
-  dispatch({ type: SET_DRAWER_OPEN });
-
-//Close Drawer
-export const closeDrawer = () => (dispatch) =>
-  dispatch({ type: SET_DRAWER_CLOSE });
-
 // FETCH chapters and sort them.
 export const fetchChapters = () => async (dispatch) => {
   try {

@@ -9,12 +9,8 @@ import Content from "./components/Content";
 import Drawer from "./components/layout/Drawer";
 import Routes from "./components/routing/Routes";
 
-//Context for other layout elements
 export default () => {
   const [auth, setAuth] = useState(true);
-  const [state, setState] = React.useState({
-    left: false,
-  });
 
   useEffect(() => {
     if (localStorage.token) {
@@ -23,27 +19,12 @@ export default () => {
     store.dispatch(loadUser());
   }, []);
 
-  const toggleDrawer = (side, open) => (event) => {
-    if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-
-    setState({ ...state, [side]: open });
-  };
-
   return (
     <>
       <Provider store={store}>
         <Router>
-          <Header auth={auth} toggleDrawer={toggleDrawer} />
-          <Drawer
-            status={state.left}
-            open={state}
-            toggleDrawer={toggleDrawer}
-          />
+          <Header auth={auth} />
+          <Drawer />
           <Switch>
             <Route exact path="/" component={Content} />
           </Switch>

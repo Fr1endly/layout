@@ -9,7 +9,7 @@ import Collapse from "@material-ui/core/Collapse";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 
-import { closeDrawer } from "../../actions/layout";
+import { closeDrawer, selectListItem } from "../../actions/layout";
 import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
@@ -26,12 +26,12 @@ const useStyles = makeStyles((theme) => ({
 
 const mapStateToProps = (state) => ({
   open: state.layout.open,
+  selectedIndex: state.layout.selectedListItem,
 });
 
-export default connect(mapStateToProps, { closeDrawer })(
-  ({ open, closeDrawer }) => {
+export default connect(mapStateToProps, { closeDrawer, selectListItem })(
+  ({ open, closeDrawer, selectListItem, selectedIndex }) => {
     const classes = useStyles();
-    const [selectedIndex, setSelectedIndex] = React.useState(null);
     const [listOpen, setListOpen] = React.useState(false);
 
     const handleClick = () => {
@@ -39,7 +39,8 @@ export default connect(mapStateToProps, { closeDrawer })(
     };
 
     const handleListItemClick = (event, index) => {
-      setSelectedIndex(index);
+      selectListItem(index);
+      console.log(selectedIndex);
     };
 
     const handleDrawerClose = () => {
@@ -56,15 +57,15 @@ export default connect(mapStateToProps, { closeDrawer })(
         <List>
           <ListItem
             button
-            selected={selectedIndex === 0}
-            onClick={(event) => handleListItemClick(event, 0)}
+            selected={selectedIndex === "news"}
+            onClick={(event) => handleListItemClick(event, "news")}
           >
             <ListItemText primary="News" />
           </ListItem>
           <ListItem
             button
-            selected={selectedIndex === 1}
-            onClick={(event) => handleListItemClick(event, 1)}
+            selected={selectedIndex === "documentation"}
+            onClick={(event) => handleListItemClick(event, "documentation")}
           >
             <ListItemText primary="Documentation" />
             {listOpen ? (
@@ -75,28 +76,43 @@ export default connect(mapStateToProps, { closeDrawer })(
           </ListItem>
           <Collapse in={listOpen} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <ListItem button className={classes.nested}>
+              <ListItem
+                button
+                className={classes.nested}
+                selected={selectedIndex === "chapter1"}
+                onClick={(e) => handleListItemClick(e, "chapter1")}
+              >
                 <ListItemText primary="CHAPTER 1" />
               </ListItem>
-              <ListItem button className={classes.nested}>
+              <ListItem
+                button
+                className={classes.nested}
+                selected={selectedIndex === "chapter2"}
+                onClick={(e) => handleListItemClick(e, "chapter2")}
+              >
                 <ListItemText primary="CHAPTER 2" />
               </ListItem>
-              <ListItem button className={classes.nested}>
+              <ListItem
+                button
+                className={classes.nested}
+                selected={selectedIndex === "chapter3"}
+                onClick={(e) => handleListItemClick(e, "chapter3")}
+              >
                 <ListItemText primary="CHAPTER 3" />
               </ListItem>
             </List>
           </Collapse>
           <ListItem
             button
-            selected={selectedIndex === 2}
-            onClick={(event) => handleListItemClick(event, 2)}
+            selected={selectedIndex === "planner"}
+            onClick={(event) => handleListItemClick(event, "planner")}
           >
             <ListItemText primary="Planner" />
           </ListItem>
           <ListItem
             button
-            selected={selectedIndex === 3}
-            onClick={(event) => handleListItemClick(event, 3)}
+            selected={selectedIndex === "forum"}
+            onClick={(event) => handleListItemClick(event, "forum")}
           >
             <ListItemText primary="Forum" />
           </ListItem>

@@ -1,7 +1,8 @@
-import { CLOSE_DRAWER, OPEN_DRAWER } from "../actions/types";
+import { CLOSE_DRAWER, OPEN_DRAWER, SELECT_LIST_ITEM } from "../actions/types";
 
 const initialState = {
-  open: true,
+  open: false,
+  selectedListItem: null,
 };
 
 export default (state = initialState, action) => {
@@ -17,6 +18,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         open: true,
+      };
+    case SELECT_LIST_ITEM:
+      return {
+        ...state,
+        selectedListItem: payload,
       };
     default:
       return state;
