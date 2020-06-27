@@ -27,6 +27,7 @@ export default () => {
           <Drawer />
           <Switch>
             <Route exact path="/" component={Content} />
+            <Route component={Routes} />
           </Switch>
           <div id="footer" />
         </Router>

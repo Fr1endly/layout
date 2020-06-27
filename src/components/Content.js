@@ -10,20 +10,18 @@ const useStyles = makeStyles(({ breakpoints, mixins }) => ({
     [breakpoints.up("sm")]: {
       padding: 24,
       maxWidth: 500,
-      margin: "auto"
+      margin: "auto",
     },
     [breakpoints.up("md")]: {
-      maxWidth: 700
-    }
+      maxWidth: 700,
+    },
   },
-  offset: mixins.toolbar
 }));
 
 export default () => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <div className={classes.offset} />
       <Typography variant={"overline"}>INTRODUCING</Typography>
       <Typography weight={"bold"} variant={"h4"} gutterBottom>
         Material UI <Link underline={"none"}>Layout</Link>

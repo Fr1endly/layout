@@ -80,6 +80,7 @@ const useStyles = makeStyles((theme) => ({
       display: "none",
     },
   },
+  offset: theme.mixins.toolbar,
 }));
 
 const mapStateToProps = (state) => ({
@@ -103,23 +104,6 @@ export default connect(mapStateToProps, { logout, openDrawer })(
     const handleDrawerOpen = () => {
       openDrawer();
     };
-
-    const mobileMenuId = "primary-search-account-menu-mobile";
-    const renderMobileMenu = (
-      <Menu
-        anchorEl={mobileMoreAnchorEl}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        id={mobileMenuId}
-        keepMounted
-        transformOrigin={{ vertical: "top", horizontal: "right" }}
-        open={isMobileMenuOpen}
-        onClose={handleMobileMenuClose}
-      >
-        {isAuthenicated
-          ? ["Profile", "Sign out"].map((s) => <MenuItem key={s}>{s}</MenuItem>)
-          : ["Sign in", "Sign up"].map((s) => <MenuItem key={s}>{s}</MenuItem>)}
-      </Menu>
-    );
 
     const authLinks = (
       <Fragment>
@@ -161,6 +145,43 @@ export default connect(mapStateToProps, { logout, openDrawer })(
           </Button>
         </Link>
       </Fragment>
+    );
+
+    const mobileMenuId = "primary-search-account-menu-mobile";
+    const renderMobileMenu = (
+      <Menu
+        anchorEl={mobileMoreAnchorEl}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        id={mobileMenuId}
+        keepMounted
+        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        open={isMobileMenuOpen}
+        onClose={handleMobileMenuClose}
+      >
+        {isAuthenicated ? (
+          <MenuItem onClick={logout}>Sign out</MenuItem>
+        ) : (
+          <MenuItem>
+            <Link component={RouterLink} to="/login">
+              Sign in
+            </Link>
+          </MenuItem>
+        )}
+        {isAuthenicated ? null : (
+          <MenuItem>
+            <Link component={RouterLink} to="/register">
+              Sign up
+            </Link>
+          </MenuItem>
+        )}
+        {isAuthenicated && isAdmin ? (
+          <MenuItem>
+            <Link component={RouterLink} to="/admin">
+              Admin
+            </Link>
+          </MenuItem>
+        ) : null}
+      </Menu>
     );
 
     return (
@@ -211,6 +232,7 @@ export default connect(mapStateToProps, { logout, openDrawer })(
           </Toolbar>
         </AppBar>
         {renderMobileMenu}
+        <div className={classes.offset} />
       </div>
     );
   }

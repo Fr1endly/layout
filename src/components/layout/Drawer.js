@@ -40,7 +40,6 @@ export default connect(mapStateToProps, { closeDrawer, selectListItem })(
 
     const handleListItemClick = (event, index) => {
       selectListItem(index);
-      console.log(selectedIndex);
     };
 
     const handleDrawerClose = () => {
