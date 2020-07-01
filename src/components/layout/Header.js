@@ -17,12 +17,22 @@ import { Link as RouterLink } from "react-router-dom";
 import { logout } from "../../actions/auth";
 import { openDrawer } from "../../actions/layout";
 
+const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
   },
+  appBar: {
+    [theme.breakpoints.up("md")]: {
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: drawerWidth,
+    },
+  },
   menuButton: {
     marginRight: theme.spacing(2),
+    [theme.breakpoints.up("md")]: {
+      display: "none",
+    },
   },
   title: {
     display: "none",
@@ -80,7 +90,6 @@ const useStyles = makeStyles((theme) => ({
       display: "none",
     },
   },
-  offset: theme.mixins.toolbar,
 }));
 
 const mapStateToProps = (state) => ({
@@ -185,8 +194,8 @@ export default connect(mapStateToProps, { logout, openDrawer })(
     );
 
     return (
-      <div className={classes.grow}>
-        <AppBar position="fixed">
+      <>
+        <AppBar position="fixed" className={classes.appBar}>
           <Toolbar>
             {/* MENU ICON FOR DRAWER */}
             <IconButton
@@ -232,8 +241,7 @@ export default connect(mapStateToProps, { logout, openDrawer })(
           </Toolbar>
         </AppBar>
         {renderMobileMenu}
-        <div className={classes.offset} />
-      </div>
+      </>
     );
   }
 );

@@ -1,16 +1,18 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import Typography from "@material-ui/core/Typography";
+import Hidden from "@material-ui/core/Hidden";
 import Collapse from "@material-ui/core/Collapse";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 
 import { closeDrawer, selectListItem } from "../../actions/layout";
 import { connect } from "react-redux";
+
+const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -22,6 +24,15 @@ const useStyles = makeStyles((theme) => ({
   nested: {
     paddingLeft: theme.spacing(4),
   },
+  drawer: {
+    [theme.breakpoints.up("md")]: {
+      width: drawerWidth,
+      flexShrink: 0,
+    },
+  },
+  drawerPaper: {
+    width: drawerWidth,
+  },
 }));
 
 const mapStateToProps = (state) => ({
@@ -32,6 +43,7 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, { closeDrawer, selectListItem })(
   ({ open, closeDrawer, selectListItem, selectedIndex }) => {
     const classes = useStyles();
+    const theme = useTheme();
     const [listOpen, setListOpen] = React.useState(false);
 
     const handleClick = () => {
@@ -46,7 +58,7 @@ export default connect(mapStateToProps, { closeDrawer, selectListItem })(
       closeDrawer();
     };
 
-    const sideList = (side) => (
+    const sideList = (
       <div
         className={classes.list}
         role="presentation"
@@ -119,12 +131,46 @@ export default connect(mapStateToProps, { closeDrawer, selectListItem })(
       </div>
     );
 
+    // const container =
+    //   window !== undefined ? () => window().document.body : undefined;
+
     return (
-      <div>
-        <Drawer open={open} onClose={handleDrawerClose}>
-          {sideList("left")}
-        </Drawer>
-      </div>
+      <nav className={classes.drawer}>
+        <Hidden smDown implementation="css">
+          <Drawer
+            variant="temporary"
+            anchor={theme.direction === "rtl" ? "right" : "left"}
+            open={open}
+            onClose={handleDrawerClose}
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+            ModalProps={{
+              keepMounted: true, // Better open performance on mobile.
+            }}
+          >
+            {sideList}
+          </Drawer>
+        </Hidden>
+
+        <Hidden smDown implementation="css">
+          <Drawer
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+            variant="permanent"
+            open
+          >
+            {sideList}
+          </Drawer>
+        </Hidden>
+      </nav>
     );
   }
 );
+
+{
+  /* <Drawer open={open} onClose={handleDrawerClose}>
+          {sideList}
+        </Drawer> */
+}
