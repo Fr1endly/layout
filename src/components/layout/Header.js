@@ -175,7 +175,9 @@ export default connect(mapStateToProps, { logout, openDrawer })(
         onClose={handleMobileMenuClose}
       >
         {isAuthenicated ? (
-          <MenuItem onClick={logout}>Sign out</MenuItem>
+          <MenuItem onClick={logout} style={{ color: "blue" }}>
+            Sign out
+          </MenuItem>
         ) : (
           <MenuItem>
             <Link component={RouterLink} to="/login">

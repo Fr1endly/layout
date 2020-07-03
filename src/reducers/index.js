@@ -9,6 +9,6 @@ export default combineReducers({
   auth,
   alert,
   admin,
-  //ruleBook,
+  ruleBook,
   layout,
 });

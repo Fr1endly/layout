@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Provider } from "react-redux";
 import setAuthToken from "./utils/setAuthToken";
 import store from "./store";
@@ -45,6 +45,7 @@ export default () => {
               <Route component={Routes} />
             </Switch>
           </div>
+          
 
           <div id="footer" />
         </Router>

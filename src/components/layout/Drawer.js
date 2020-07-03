@@ -8,8 +8,10 @@ import Hidden from "@material-ui/core/Hidden";
 import Collapse from "@material-ui/core/Collapse";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
-
+import { Link as RouterLink } from "react-router-dom";
+import { startCase } from "lodash";
 import { closeDrawer, selectListItem } from "../../actions/layout";
+import { fetchChapters } from "../../actions/ruleBook";
 import { connect } from "react-redux";
 
 const drawerWidth = 240;
@@ -39,13 +41,35 @@ const useStyles = makeStyles((theme) => ({
 const mapStateToProps = (state) => ({
   open: state.layout.open,
   selectedIndex: state.layout.selectedListItem,
+  chapters: state.ruleBook.chapters,
 });
 
-export default connect(mapStateToProps, { closeDrawer, selectListItem })(
-  ({ open, closeDrawer, selectListItem, selectedIndex }) => {
+const ListItemLink = (props) => (
+  <ListItem button component={RouterLink} {...props} />
+);
+
+export default connect(mapStateToProps, {
+  closeDrawer,
+  selectListItem,
+  fetchChapters,
+})(
+  ({
+    open,
+    closeDrawer,
+    chapters,
+    selectListItem,
+    selectedIndex,
+    fetchChapters,
+  }) => {
     const classes = useStyles();
     const theme = useTheme();
     const [listOpen, setListOpen] = React.useState(false);
+
+    React.useEffect(() => {
+      setTimeout(() => {
+        fetchChapters();
+      }, 500);
+    }, [fetchChapters]);
 
     const handleClick = () => {
       setListOpen(!listOpen);
@@ -80,7 +104,7 @@ export default connect(mapStateToProps, { closeDrawer, selectListItem })(
             selected={selectedIndex === "documentation"}
             onClick={(event) => handleListItemClick(event, "documentation")}
           >
-            <ListItemText primary="Documentation" />
+            <ListItemText primary="Rulebook" />
             {listOpen ? (
               <ExpandLess onClick={(e) => handleClick()} />
             ) : (
@@ -89,30 +113,20 @@ export default connect(mapStateToProps, { closeDrawer, selectListItem })(
           </ListItem>
           <Collapse in={listOpen} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <ListItem
-                button
-                className={classes.nested}
-                selected={selectedIndex === "chapter1"}
-                onClick={(e) => handleListItemClick(e, "chapter1")}
-              >
-                <ListItemText primary="CHAPTER 1" />
-              </ListItem>
-              <ListItem
-                button
-                className={classes.nested}
-                selected={selectedIndex === "chapter2"}
-                onClick={(e) => handleListItemClick(e, "chapter2")}
-              >
-                <ListItemText primary="CHAPTER 2" />
-              </ListItem>
-              <ListItem
-                button
-                className={classes.nested}
-                selected={selectedIndex === "chapter3"}
-                onClick={(e) => handleListItemClick(e, "chapter3")}
-              >
-                <ListItemText primary="CHAPTER 3" />
-              </ListItem>
+              {chapters.map((chapter, index) => (
+                <ListItemLink
+                  key={chapter.title}
+                  button
+                  className={classes.nested}
+                  selected={selectedIndex === "chapter1"}
+                  onClick={(e) => handleListItemClick(e, "chapter1")}
+                  to={`/rulebook/${chapter.title}`}
+                >
+                  <ListItemText
+                    primary={`${chapter.index} ${startCase(chapter.title)}`}
+                  />
+                </ListItemLink>
+              ))}
             </List>
           </Collapse>
           <ListItem
@@ -132,9 +146,6 @@ export default connect(mapStateToProps, { closeDrawer, selectListItem })(
         </List>
       </div>
     );
-
-    // const container =
-    //   window !== undefined ? () => window().document.body : undefined;
 
     return (
       <nav className={classes.drawer}>

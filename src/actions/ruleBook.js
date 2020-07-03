@@ -81,7 +81,7 @@ export const editChapter = (chapter, history, id) => async (dispatch) => {
     await axios.post(`http://localhost:3000/api/chapters/${id}`, body, config);
     history.push(`/admin/`);
   } catch (error) {
-    const errors = err.response.data.errors;
+    const errors = error.response.data.errors;
     if (errors) {
       errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
     }

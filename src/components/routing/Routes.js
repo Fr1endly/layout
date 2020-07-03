@@ -3,6 +3,8 @@ import { Route, Switch } from "react-router-dom";
 
 import Register from "../../components/auth/Register";
 import Login from "../../components/auth/Login";
+import Dashbord from "../../components/dashbord";
+import AdminRoute from "./AdminRoute";
 // import AdminUserView from "../../components/admin/AdminUserView";
 // import AdminPanelMat from "../../components/admin/AdminPanelMat";
 // import AdminCreateUser from "../../components/admin/AdminCreateUser";
@@ -17,9 +19,10 @@ const Routes = () => {
       <Switch>
         <Route path="/register" component={Register} />
         <Route path="/login" component={Login} />
+        <AdminRoute exact path="/admin" component={Dashbord} />
         {/* <PrivateRoute exact path="/rulebook" component={RuleBook} />
         <PrivateRoute path="/rulebook/:title" component={RuleBook} />
-        <AdminRoute exact path="/admin" component={AdminPanelMat} />
+
         <AdminRoute exact path="/admin/users/new" component={AdminCreateUser} />
         <AdminRoute exact path="/admin/users/:id" component={AdminUserView} />
         <AdminRoute exact path="/admin/editor" component={RTE} />

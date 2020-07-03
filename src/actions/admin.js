@@ -81,7 +81,7 @@ export const deleteUser = (id) => async (dispatch) => {
   try {
     await axios.delete(`http://localhost:3000/admin/users/${id}`);
   } catch (err) {
-    console.log(error);
+    console.log(err);
   }
 };
 
