@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { Route, Switch } from "react-router-dom";
 
-// import Register from "../../components/auth/Register";
+import Register from "../../components/auth/Register";
 import Login from "../../components/auth/Login";
 // import AdminUserView from "../../components/admin/AdminUserView";
 // import AdminPanelMat from "../../components/admin/AdminPanelMat";
@@ -15,7 +15,7 @@ const Routes = () => {
   return (
     <Fragment>
       <Switch>
-        {/* <Route path="/register" component={Register} /> */}
+        <Route path="/register" component={Register} />
         <Route path="/login" component={Login} />
         {/* <PrivateRoute exact path="/rulebook" component={RuleBook} />
         <PrivateRoute path="/rulebook/:title" component={RuleBook} />

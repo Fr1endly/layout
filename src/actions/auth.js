@@ -72,11 +72,11 @@ export const login = ({ email, password }) => async (dispatch) => {
           payload: err.msg,
         });
 
-        setTimeout(() => {
-          dispatch({
-            type: CLEAR_ERROR,
-          });
-        }, 3000);
+        // setTimeout(() => {
+        //   dispatch({
+        //     type: CLEAR_ERROR,
+        //   });
+        // }, 3000);
       });
     }
     dispatch({

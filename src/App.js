@@ -9,6 +9,7 @@ import Header from "./components/layout/Header";
 import Content from "./components/Content";
 import Drawer from "./components/layout/Drawer";
 import Routes from "./components/routing/Routes";
+import Alert from "./components/alert";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,7 +39,7 @@ export default () => {
           <Drawer />
           <div className={classes.content}>
             <div className={classes.offset} />
-
+            <Alert />
             <Switch>
               <Route exact path="/" component={Content} />
               <Route component={Routes} />
