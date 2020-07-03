@@ -12,20 +12,8 @@ import Box from "@material-ui/core/Box";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    height: "100vh",
-  },
-  image: {
-    //backgroundImage: `url(${require("../public/TowerHouse.jpg")})`,
-    backgroundRepeat: "no-repeat",
-    // backgroundColor:
-    //   theme.palette.type === "light"
-    //     ? theme.palette.grey[50]
-    //     : theme.palette.grey[900],
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-  },
   paper: {
+    //background: "purple",
     height: "95%",
     margin: "0 20%",
     display: "flex",
@@ -36,8 +24,15 @@ const useStyles = makeStyles((theme) => ({
       margin: "0 10px",
     },
   },
+  logo: {
+    fontFamily: "Fredericka the Great",
+    fontSize: "40px",
+  },
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: "70%", // Fix IE 11 issue.
+    [theme.breakpoints.down("xs")]: {
+      width: "100%",
+    },
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -45,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Login({ login, isAuthenicated }) {
+function Login({ login, isAuthenicated, error }) {
   const classes = useStyles();
   const [formData, setFormData] = useState({
     email: "",
@@ -73,12 +68,7 @@ function Login({ login, isAuthenicated }) {
   return (
     <Fragment>
       <div className={classes.paper}>
-        <span
-          className={classes.logo}
-          style={{ fontFamily: "Fredericka the Great", fontSize: "40px" }}
-        >
-          Role & Roll
-        </span>
+        <span className={classes.logo}>Role & Roll</span>
         <form className={classes.form} noValidate onSubmit={(e) => onSubmit(e)}>
           <div
             style={{
@@ -88,6 +78,8 @@ function Login({ login, isAuthenicated }) {
             }}
           >
             <TextField
+              error={error ? true : false}
+              helperText={error ? error : null}
               className={classes.input}
               variant="outlined"
               margin="normal"
@@ -101,6 +93,8 @@ function Login({ login, isAuthenicated }) {
               onChange={(e) => onChange(e)}
             />
             <TextField
+              error={error ? true : false}
+              helperText={error ? error : null}
               className={classes.input}
               variant="outlined"
               margin="normal"
@@ -169,6 +163,7 @@ function Login({ login, isAuthenicated }) {
 
 const mapStateToProps = (state) => ({
   isAuthenicated: state.auth.isAuthenicated,
+  error: state.auth.error,
 });
 
 export default connect(mapStateToProps, { login })(Login);

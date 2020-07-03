@@ -39,6 +39,8 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("sm")]: {
       display: "block",
     },
+    fontFamily: "Fredericka the Great",
+    fontSize: "2em",
   },
   button: {
     marginRight: theme.spacing(1),
@@ -126,8 +128,13 @@ export default connect(mapStateToProps, { logout, openDrawer })(
           Sign out
         </Button>
         {isAdmin ? (
-          <Link component={RouterLink} to="/admin">
-            <Button variant="outlined" size="small" className={classes.button}>
+          <Link component={RouterLink} color="inherit" to="/admin">
+            <Button
+              variant="outlined"
+              color="inherit"
+              size="small"
+              className={classes.button}
+            >
               Admin
             </Button>
           </Link>
