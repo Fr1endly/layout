@@ -3,8 +3,41 @@ import { register } from "../../actions/auth";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { setAlert } from "../../actions/alert";
+import { makeStyles } from "@material-ui/core/styles";
+
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    height: "95%",
+    margin: "0 20%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    [theme.breakpoints.down("sm")]: {
+      margin: "0 10px",
+    },
+  },
+  logo: {
+    fontFamily: "Fredericka the Great",
+    fontSize: "40px",
+  },
+  form: {
+    width: "70%", // Fix IE 11 issue.
+    [theme.breakpoints.down("xs")]: {
+      width: "100%",
+    },
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
 
 function Register({ register, isAuthenicated, setAlert }) {
+  const classes = useStyles();
   const [formData, setFormData] = useState({
     email: "",
     name: "",
@@ -35,8 +68,79 @@ function Register({ register, isAuthenicated, setAlert }) {
   }
 
   return (
-    <Fragment>
-      <form className="form" onSubmit={(e) => onSubmit(e)}>
+    <div className={classes.root}>
+      <span className={classes.logo}>Role & Roll</span>
+      <form className={classes.form} noValidate onSubmit={(e) => onSubmit(e)}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+          <TextField
+            className={classes.input}
+            variant="outlined"
+            margin="normal"
+            required
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            value={formData.email}
+            onChange={(e) => onChange(e)}
+          />
+          <TextField
+            className={classes.input}
+            variant="outlined"
+            margin="normal"
+            required
+            id="name"
+            label="name"
+            name="name"
+            autoComplete="name"
+            autoFocus
+            value={formData.name}
+            onChange={(e) => onChange(e)}
+          />
+          <TextField
+            className={classes.input}
+            variant="outlined"
+            margin="normal"
+            required
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            value={formData.password}
+            onChange={(e) => onChange(e)}
+          />
+          <TextField
+            className={classes.input}
+            variant="outlined"
+            margin="normal"
+            required
+            name="password2"
+            label="Confirm password"
+            type="password"
+            id="password2"
+            value={formData.password2}
+            onChange={(e) => onChange(e)}
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
+            Sign up
+          </Button>
+        </div>
+      </form>
+
+      {/* <form className="form" onSubmit={(e) => onSubmit(e)}>
         <div className="form-group">
           <input
             type="email"
@@ -77,8 +181,8 @@ function Register({ register, isAuthenicated, setAlert }) {
         <div className="form-group">
           <input type="submit" value="Submit" style={{ marginTop: "15px" }} />
         </div>
-      </form>
-    </Fragment>
+      </form> */}
+    </div>
   );
 }
 
