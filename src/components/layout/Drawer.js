@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
   drawerPaper: {
     width: drawerWidth,
   },
+  offset: theme.mixins.toolbar,
 }));
 
 const mapStateToProps = (state) => ({
@@ -65,6 +66,7 @@ export default connect(mapStateToProps, { closeDrawer, selectListItem })(
         //onClick={toggleDrawer(side, false)}
         onKeyDown={handleDrawerClose}
       >
+        <div className={classes.offset} />
         <List>
           <ListItem
             button
@@ -168,9 +170,3 @@ export default connect(mapStateToProps, { closeDrawer, selectListItem })(
     );
   }
 );
-
-{
-  /* <Drawer open={open} onClose={handleDrawerClose}>
-          {sideList}
-        </Drawer> */
-}

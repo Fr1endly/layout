@@ -7,13 +7,15 @@ import {
   AUTH_ERROR,
   LOGIN_FAIL,
   LOGOUT,
-  ADMIN_LOADED
+  ADMIN_LOADED,
+  SET_ERROR,
+  CLEAR_ERROR,
 } from "./types";
 import { setAlert } from "./alert";
 import setAuthToken from "../utils/setAuthToken";
 
 //LOAD USER
-export const loadUser = () => async dispatch => {
+export const loadUser = () => async (dispatch) => {
   if (localStorage.token) {
     setAuthToken(localStorage.token);
   }
@@ -24,25 +26,25 @@ export const loadUser = () => async dispatch => {
     res.data.isAdmin
       ? dispatch({
           type: ADMIN_LOADED,
-          payload: res.data
+          payload: res.data,
         })
       : dispatch({
           type: USER_LOADED,
-          payload: res.data
+          payload: res.data,
         });
   } catch (err) {
     dispatch({
-      type: AUTH_ERROR
+      type: AUTH_ERROR,
     });
   }
 };
 
 // LOGIN
-export const login = ({ email, password }) => async dispatch => {
+export const login = ({ email, password }) => async (dispatch) => {
   const config = {
     headers: {
-      "Content-Type": "application/json"
-    }
+      "Content-Type": "application/json",
+    },
   };
   const body = JSON.stringify({ email, password });
 
@@ -56,33 +58,46 @@ export const login = ({ email, password }) => async dispatch => {
     //
     dispatch({
       type: LOGIN_SUCCESS,
-      payload: res.data
+      payload: res.data,
     });
     dispatch(loadUser());
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
-      errors.forEach(error => dispatch(setAlert(error.msg, "danger")));
+      errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+      /////////////
+      errors.forEach((err) => {
+        dispatch({
+          type: SET_ERROR,
+          payload: err.msg,
+        });
+
+        setTimeout(() => {
+          dispatch({
+            type: CLEAR_ERROR,
+          });
+        }, 3000);
+      });
     }
     dispatch({
-      type: LOGIN_FAIL
+      type: LOGIN_FAIL,
     });
   }
 };
 
 // LOGOUT / CLEAR PROFILE
-export const logout = () => dispatch => {
+export const logout = () => (dispatch) => {
   dispatch({
-    type: LOGOUT
+    type: LOGOUT,
   });
 };
 
 // REGISTER
-export const register = ({ name, email, password }) => async dispatch => {
+export const register = ({ name, email, password }) => async (dispatch) => {
   const config = {
     headers: {
-      "Content-Type": "application/json"
-    }
+      "Content-Type": "application/json",
+    },
   };
   const body = JSON.stringify({ name, email, password });
 
@@ -96,17 +111,17 @@ export const register = ({ name, email, password }) => async dispatch => {
     // and sending it you auth reducer
     dispatch({
       type: REGISTER_SUCCESS,
-      payload: res.data
+      payload: res.data,
     });
     dispatch(loadUser());
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
-      errors.forEach(error => dispatch(setAlert(error.msg, "danger")));
+      errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
     }
 
     dispatch({
-      type: REGISTER_FAIL
+      type: REGISTER_FAIL,
     });
   }
 };

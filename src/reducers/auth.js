@@ -7,6 +7,8 @@ import {
   LOGIN_FAIL,
   ADMIN_LOADED,
   LOGOUT,
+  SET_ERROR,
+  CLEAR_ERROR,
 } from "../actions/types";
 
 const initialState = {
@@ -15,6 +17,7 @@ const initialState = {
   isAdmin: null,
   loading: true,
   user: null,
+  error: null,
 };
 
 export default (state = initialState, action) => {
@@ -46,6 +49,16 @@ export default (state = initialState, action) => {
         isAuthenicated: false,
         loading: false,
         isAdmin: false,
+      };
+    case SET_ERROR:
+      return {
+        ...state,
+        error: payload,
+      };
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        error: null,
       };
     case USER_LOADED:
       return {
