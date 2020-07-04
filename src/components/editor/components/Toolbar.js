@@ -20,40 +20,56 @@ import FormatQuoteIcon from "@material-ui/icons/FormatQuote";
 import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
 import FormatListNumberedIcon from "@material-ui/icons/FormatListNumbered";
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    position: "-webkit-sticky",
+    position: "sticky",
+    top: 0,
+  },
+  buttonGroup: {
+    display: "flex",
+    justifyContent: "center",
+    background: "#d1d1cb",
+  },
+}));
+
 const Toolbar = () => {
+  const classes = useStyles();
   return (
-    <div>
-      <MarkButton format="bold">
-        <FormatBoldIcon />
-      </MarkButton>
-      <MarkButton format="italic">
-        <FormatItalicIcon />
-      </MarkButton>
-      <MarkButton format="underline">
-        <FormatUnderlinedIcon />
-      </MarkButton>
-      <BlockButton format="heading-one">
-        <LooksOneIcon />
-      </BlockButton>
-      <BlockButton format="heading-two">
-        <LooksTwoIcon />
-      </BlockButton>
-      <BlockButton format="block-quote">
-        <FormatQuoteIcon />
-      </BlockButton>
-      <BlockButton format="numbered-list">
-        <FormatListNumberedIcon />
-      </BlockButton>
-      <BlockButton format="bulleted-list">
-        <FormatListBulletedIcon />
-      </BlockButton>
-      <LinkButton />
-      <InsertTableButton />
-      <DeleteTableButton />
-      <InsertRowButton />
-      <InsertColumnButton />
-      <DeleteRowButton />
-      <DeleteColumnButton />
+    <div className={classes.root}>
+      <div className={classes.buttonGroup}>
+        <MarkButton format="bold">
+          <FormatBoldIcon />
+        </MarkButton>
+        <MarkButton format="italic">
+          <FormatItalicIcon />
+        </MarkButton>
+        <MarkButton format="underline">
+          <FormatUnderlinedIcon />
+        </MarkButton>
+        <BlockButton format="heading-one">
+          <LooksOneIcon />
+        </BlockButton>
+        <BlockButton format="heading-two">
+          <LooksTwoIcon />
+        </BlockButton>
+        <BlockButton format="block-quote">
+          <FormatQuoteIcon />
+        </BlockButton>
+        <BlockButton format="numbered-list">
+          <FormatListNumberedIcon />
+        </BlockButton>
+        <BlockButton format="bulleted-list">
+          <FormatListBulletedIcon />
+        </BlockButton>
+        <LinkButton />
+        <InsertTableButton />
+        <DeleteTableButton />
+        <InsertRowButton />
+        <InsertColumnButton />
+        <DeleteRowButton />
+        <DeleteColumnButton />
+      </div>
     </div>
   );
 };

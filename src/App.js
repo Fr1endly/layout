@@ -14,8 +14,10 @@ import Alert from "./components/alert";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+    height: "100%",
   },
   content: {
+    height: "100%",
     flexGrow: 1,
   },
   offset: theme.mixins.toolbar,
@@ -45,7 +47,6 @@ export default () => {
               <Route component={Routes} />
             </Switch>
           </div>
-          
 
           <div id="footer" />
         </Router>
