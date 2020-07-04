@@ -85,7 +85,7 @@ export default connect(mapStateToProps, {
         title: "",
         index: 0,
       });
-
+      //Slate editor value
       const [value, setValue] = useState(initialValue);
       const renderElement = useCallback((props) => <Element {...props} />, []);
       const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
@@ -143,15 +143,12 @@ export default connect(mapStateToProps, {
           >
             <Toolbar />
 
-            <Divider />
             <Editable
               renderElement={renderElement}
               renderLeaf={renderLeaf}
               placeholder="Entser some rich text…"
               spellCheck
               style={{
-                minHeight: searchDisplay ? null : "400px",
-                maxHeight: searchDisplay ? "10px" : null,
                 background: "#fbfbf8",
                 height: "85%",
               }}
@@ -165,7 +162,7 @@ export default connect(mapStateToProps, {
                 }
               }}
             />
-            {readOnly ? null : (
+            {/* {readOnly ? null : (
               <div
                 className={classes.toolbar}
                 style={{ justifyContent: "center" }}
@@ -194,7 +191,7 @@ export default connect(mapStateToProps, {
                   </Button>
                 </form>
               </div>
-            )}
+            )} */}
           </Slate>
         </div>
       );

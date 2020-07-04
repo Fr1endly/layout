@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import BlockButton from "./BlockButton";
 import MarkButton from "./MarkButton";
@@ -19,22 +19,43 @@ import LooksTwoIcon from "@material-ui/icons/LooksTwo";
 import FormatQuoteIcon from "@material-ui/icons/FormatQuote";
 import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
 import FormatListNumberedIcon from "@material-ui/icons/FormatListNumbered";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     position: "-webkit-sticky",
     position: "sticky",
     top: 0,
+    background: "#d1d1cb",
   },
   buttonGroup: {
     display: "flex",
     justifyContent: "center",
-    background: "#d1d1cb",
+  },
+  toolbar: {
+    display: "flex",
+    // flexDirection: "column",
+    justifyContent: "center",
   },
 }));
 
 const Toolbar = () => {
   const classes = useStyles();
+  const [formValue, setFormValue] = useState({
+    title: "",
+    index: 0,
+  });
+
+  const handleChange = (e) => {
+    setFormValue({
+      ...formValue,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = null;
+
   return (
     <div className={classes.root}>
       <div className={classes.buttonGroup}>
@@ -69,6 +90,31 @@ const Toolbar = () => {
         <InsertColumnButton />
         <DeleteRowButton />
         <DeleteColumnButton />
+      </div>
+      <div className={classes.toolbar}>
+        <form onSubmit={(e) => handleSubmit(e)}>
+          <TextField
+            onChange={(e) => handleChange(e)}
+            name="title"
+            value={formValue.title}
+            type="text"
+            label="Title"
+            className={classes.input}
+            variant="outlined"
+          />
+          <TextField
+            onChange={(e) => handleChange(e)}
+            name="index"
+            value={formValue.index}
+            label="Index"
+            className={classes.input}
+            variant="outlined"
+            type="number"
+          />
+          <Button type="submit" color="primary">
+            Submit
+          </Button>
+        </form>
       </div>
     </div>
   );
