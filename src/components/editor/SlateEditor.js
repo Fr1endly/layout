@@ -101,20 +101,9 @@ export default connect(mapStateToProps, {
         });
       };
 
-      const handleSubmit = (e) => {
-        e.preventDefault();
+      const handleSlateChange = value => setValue(value)
 
-        const chapter = {
-          ...formValue,
-          sections: JSON.stringify(value),
-        };
 
-        if (edit) {
-          editChapter(chapter, history, match.params.id);
-        } else {
-          saveChapter(chapter, history);
-        }
-      };
 
       // Load chapter for editing to admin user
       if (edit) {
@@ -141,7 +130,7 @@ export default connect(mapStateToProps, {
             value={value}
             onChange={(value) => setValue(value)}
           >
-            <Toolbar />
+            <Toolbar slateValue={value} edit={edit}/>
 
             <Editable
               renderElement={renderElement}
@@ -198,3 +187,19 @@ export default connect(mapStateToProps, {
     }
   )
 );
+
+
+      // const handleSubmit = (e) => {
+      //   e.preventDefault();
+
+      //   const chapter = {
+      //     ...formValue,
+      //     sections: JSON.stringify(value),
+      //   };
+
+      //   if (edit) {
+      //     editChapter(chapter, history, match.params.id);
+      //   } else {
+      //     saveChapter(chapter, history);
+      //   }
+      // };

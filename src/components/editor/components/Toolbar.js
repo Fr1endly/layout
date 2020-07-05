@@ -10,6 +10,7 @@ import {
   InsertRowButton,
   DeleteRowButton,
 } from "../withTables/Components";
+import SaveOptionsModal from "./SaveOptionsModal";
 import LinkButton from "../withLinks/components/LinkButton";
 import FormatBoldIcon from "@material-ui/icons/FormatBold";
 import FormatItalicIcon from "@material-ui/icons/FormatItalic";
@@ -40,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Toolbar = () => {
+const Toolbar = ({ slateValue, edit }) => {
   const classes = useStyles();
   const [formValue, setFormValue] = useState({
     title: "",
@@ -92,29 +93,7 @@ const Toolbar = () => {
         <DeleteColumnButton />
       </div>
       <div className={classes.toolbar}>
-        <form onSubmit={(e) => handleSubmit(e)}>
-          <TextField
-            onChange={(e) => handleChange(e)}
-            name="title"
-            value={formValue.title}
-            type="text"
-            label="Title"
-            className={classes.input}
-            variant="outlined"
-          />
-          <TextField
-            onChange={(e) => handleChange(e)}
-            name="index"
-            value={formValue.index}
-            label="Index"
-            className={classes.input}
-            variant="outlined"
-            type="number"
-          />
-          <Button type="submit" color="primary">
-            Submit
-          </Button>
-        </form>
+        <SaveOptionsModal value={slateValue} edit={edit} />
       </div>
     </div>
   );

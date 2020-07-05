@@ -69,7 +69,7 @@ export default connect(mapStateToProps, {
       setTimeout(() => {
         fetchChapters();
       }, 500);
-    }, [fetchChapters]);
+    }, [fetchChapters, chapters]);
 
     const handleClick = () => {
       setListOpen(!listOpen);
