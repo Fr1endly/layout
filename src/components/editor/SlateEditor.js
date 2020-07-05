@@ -79,6 +79,8 @@ export default connect(mapStateToProps, {
         []
       );
 
+      const handleChange = (value) => setValue(value);
+
       // Load chapter for editing to admin user
       if (edit) {
         useEffect(() => {
@@ -99,11 +101,7 @@ export default connect(mapStateToProps, {
 
       return (
         <div className={classes.root}>
-          <Slate
-            editor={editor}
-            value={value}
-            onChange={(value) => setValue(value)}
-          >
+          <Slate editor={editor} value={value} onChange={handleChange}>
             <Toolbar slateValue={value} edit={edit} />
             <Editable
               className={classes.editor}

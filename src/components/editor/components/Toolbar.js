@@ -93,7 +93,7 @@ const Toolbar = ({ slateValue, edit }) => {
         <DeleteColumnButton />
       </div>
       <div className={classes.toolbar}>
-        <SaveOptionsModal value={slateValue} edit={edit} />
+        <SaveOptionsModal slateValue={slateValue} edit={edit} />
       </div>
     </div>
   );

@@ -1,21 +1,20 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
-import SaveOptionsForm from './SaveOptionsForm'
-
+import SaveOptionsForm from "./SaveOptionsForm";
 
 function getModalStyle() {
-  const top = 50 
-  const left = 50 
+  const top = 50;
+  const left = 50;
 
   return {
     top: `${top}%`,
     left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`
+    transform: `translate(-${top}%, -${left}%)`,
   };
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     position: "absolute",
     width: 400,
@@ -24,11 +23,11 @@ const useStyles = makeStyles(theme => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
     display: "flex",
-    justifyContent: "center"
-  }
+    justifyContent: "center",
+  },
 }));
 
-export default function SimpleModal() {
+export default function SimpleModal({ slateValue, edit }) {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
@@ -44,7 +43,7 @@ export default function SimpleModal() {
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <SaveOptionsForm/>
+      <SaveOptionsForm slateValue={slateValue} edit={edit} />
     </div>
   );
 
