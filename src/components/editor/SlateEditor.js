@@ -19,9 +19,6 @@ import Leaf from "./Leaf";
 import initialValue from "./InitialValue";
 import CustomEditor from "./CustomEditor";
 import { makeStyles } from "@material-ui/core/styles";
-import Divider from "@material-ui/core/Divider";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
 
 const HOTKEYS = {
   "mod+b": "bold",
@@ -46,7 +43,8 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
   },
   editor: {
-    background: theme.palette.background.paper,
+    background: "#fbfbf8",
+    height: "85%",
   },
   input: {
     marginRight: theme.spacing(2),
@@ -66,20 +64,7 @@ export default connect(mapStateToProps, {
   editChapter,
 })(
   withRouter(
-    ({
-      searchDisplay,
-      getChapterById,
-      saveChapter,
-      history,
-      readOnly,
-      match,
-      chapters,
-      chapter,
-      chapterId,
-      editChapter,
-      edit,
-      sections,
-    }) => {
+    ({ getChapterById, match, chapter, chapterId, edit, sections }) => {
       const classes = useStyles();
       const [formValue, setFormValue] = useState({
         title: "",
@@ -93,17 +78,6 @@ export default connect(mapStateToProps, {
         () => withTables(withLinks(withHistory(withReact(createEditor())))),
         []
       );
-
-      const handleChange = (e) => {
-        setFormValue({
-          ...formValue,
-          [e.target.name]: e.target.value,
-        });
-      };
-
-      const handleSlateChange = value => setValue(value)
-
-
 
       // Load chapter for editing to admin user
       if (edit) {
@@ -130,17 +104,13 @@ export default connect(mapStateToProps, {
             value={value}
             onChange={(value) => setValue(value)}
           >
-            <Toolbar slateValue={value} edit={edit}/>
-
+            <Toolbar slateValue={value} edit={edit} />
             <Editable
+              className={classes.editor}
               renderElement={renderElement}
               renderLeaf={renderLeaf}
-              placeholder="Entser some rich text…"
+              placeholder="Enter some rich text…"
               spellCheck
-              style={{
-                background: "#fbfbf8",
-                height: "85%",
-              }}
               onKeyDown={(event) => {
                 for (const hotkey in HOTKEYS) {
                   if (isHotkey(hotkey, event)) {
@@ -151,36 +121,6 @@ export default connect(mapStateToProps, {
                 }
               }}
             />
-            {/* {readOnly ? null : (
-              <div
-                className={classes.toolbar}
-                style={{ justifyContent: "center" }}
-              >
-                <form onSubmit={(e) => handleSubmit(e)}>
-                  <TextField
-                    onChange={(e) => handleChange(e)}
-                    name="title"
-                    value={formValue.title}
-                    type="text"
-                    label="Title"
-                    className={classes.input}
-                    variant="outlined"
-                  />
-                  <TextField
-                    onChange={(e) => handleChange(e)}
-                    name="index"
-                    value={formValue.index}
-                    label="Index"
-                    className={classes.input}
-                    variant="outlined"
-                    type="number"
-                  />
-                  <Button type="submit" color="primary">
-                    Submit
-                  </Button>
-                </form>
-              </div>
-            )} */}
           </Slate>
         </div>
       );
@@ -188,18 +128,17 @@ export default connect(mapStateToProps, {
   )
 );
 
+// const handleSubmit = (e) => {
+//   e.preventDefault();
 
-      // const handleSubmit = (e) => {
-      //   e.preventDefault();
+//   const chapter = {
+//     ...formValue,
+//     sections: JSON.stringify(value),
+//   };
 
-      //   const chapter = {
-      //     ...formValue,
-      //     sections: JSON.stringify(value),
-      //   };
-
-      //   if (edit) {
-      //     editChapter(chapter, history, match.params.id);
-      //   } else {
-      //     saveChapter(chapter, history);
-      //   }
-      // };
+//   if (edit) {
+//     editChapter(chapter, history, match.params.id);
+//   } else {
+//     saveChapter(chapter, history);
+//   }
+// };

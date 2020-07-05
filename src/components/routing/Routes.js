@@ -22,6 +22,13 @@ const Routes = () => {
         <Route path="/login" component={Login} />
         <AdminRoute exact path="/admin" component={Dashbord} />
         <AdminRoute exact path="/admin/editor" component={SlateEditor} />
+
+        <AdminRoute
+          exact
+          path="/admin/editChapter/:id"
+          component={SlateEditor}
+          edit={true}
+        />
         {/* <PrivateRoute exact path="/rulebook" component={RuleBook} />
         <PrivateRoute path="/rulebook/:title" component={RuleBook} />
 
