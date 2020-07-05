@@ -69,7 +69,7 @@ export default connect(mapStateToProps, {
       setTimeout(() => {
         fetchChapters();
       }, 500);
-    }, [fetchChapters, chapters]);
+    }, [fetchChapters]);
 
     const handleClick = () => {
       setListOpen(!listOpen);
@@ -118,8 +118,8 @@ export default connect(mapStateToProps, {
                   key={chapter.title}
                   button
                   className={classes.nested}
-                  selected={selectedIndex === "chapter1"}
-                  onClick={(e) => handleListItemClick(e, "chapter1")}
+                  selected={selectedIndex === chapter.title}
+                  onClick={(e) => handleListItemClick(e, chapter.title)}
                   to={`/rulebook/${chapter.title}`}
                 >
                   <ListItemText
