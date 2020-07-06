@@ -4,6 +4,8 @@ import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import CustomEditor from "../editor/CustomEditor";
 import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
+import { startCase } from "lodash";
 
 const useStyles = makeStyles(({ breakpoints }) => ({
   root: {
@@ -74,8 +76,25 @@ export default connect(mapStateToProps)(
       ? CustomEditor.serialiseHtmlFromValue(JSON.parse(activeChapter.sections))
       : null;
 
+    const heading = (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          marginBottom: "2rem",
+        }}
+      >
+        <Typography variant="h3">{startCase(activeChapter.title)}</Typography>
+        <Typography variant="overline">
+          Chapter: {activeChapter.index} / {chapters.length - 1}
+        </Typography>
+        <Divider />
+      </div>
+    );
+
     return (
       <div className={classes.root}>
+        {activeChapter ? heading : null}
         <div
           className={classes.content}
           dangerouslySetInnerHTML={{ __html: htmlContent }}

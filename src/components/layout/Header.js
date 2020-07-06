@@ -6,6 +6,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import InputBase from "@material-ui/core/InputBase";
+import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -16,6 +17,9 @@ import Link from "@material-ui/core/Link";
 import { Link as RouterLink } from "react-router-dom";
 import { logout } from "../../actions/auth";
 import { openDrawer } from "../../actions/layout";
+import Autocomplete, {
+  createFilterOptions,
+} from "@material-ui/lab/Autocomplete";
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -79,6 +83,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("md")]: {
       width: 200,
     },
+    color: "inherit",
   },
   sectionDesktop: {
     display: "none",
@@ -94,15 +99,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const filterOptions = createFilterOptions({
+  stringify: (option) => option.title,
+  stringify: (option) => option.sections,
+});
+
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  ruleBook: state.ruleBook,
 });
 
 export default connect(mapStateToProps, { logout, openDrawer })(
-  ({ auth: { isAuthenicated, loading, isAdmin }, logout, openDrawer }) => {
+  ({
+    auth: { isAuthenicated, loading, isAdmin },
+    ruleBook: { open, chapters },
+    logout,
+    openDrawer,
+  }) => {
     const classes = useStyles();
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+    const [value, setValue] = React.useState(null);
+    const [inputValue, setInputValue] = React.useState("");
 
     const handleMobileMenuClose = () => {
       setMobileMoreAnchorEl(null);
@@ -220,16 +238,48 @@ export default connect(mapStateToProps, { logout, openDrawer })(
               R&R
             </Typography>
             <div className={classes.search}>
-              <div className={classes.searchIcon}>
+              {/* <div className={classes.searchIcon}>
                 <SearchIcon />
-              </div>
-              <InputBase
+              </div> */}
+              {/* <InputBase
                 placeholder="Search…"
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput,
                 }}
                 inputProps={{ "aria-label": "search" }}
+              /> */}
+              <Autocomplete
+                autoHighlight
+                freeSolo
+                value={value}
+                onChange={(event, newValue) => {
+                  setValue(newValue);
+                }}
+                inputValue={inputValue}
+                onInputChange={(event, newInputValue) => {
+                  setInputValue(newInputValue);
+                }}
+                id="search"
+                options={chapters}
+                getOptionLabel={(option) => option.title}
+                filterOptions={filterOptions}
+                style={{ width: 300 }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    className={classes.inputInput}
+                    label="Search"
+                    InputProps={{
+                      ...params.InputProps,
+                      disableUnderline: true,
+                      classes: {
+                        root: classes.inputRoot,
+                        input: classes.inputInput,
+                      },
+                    }}
+                  />
+                )}
               />
             </div>
             <div className={classes.grow} />

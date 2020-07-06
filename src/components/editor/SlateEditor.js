@@ -45,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
   editor: {
     background: "#fbfbf8",
     height: "85%",
+    fontSize: "1rem",
   },
   input: {
     marginRight: theme.spacing(2),

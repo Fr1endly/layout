@@ -57,7 +57,7 @@ const Element = ({ attributes, children, element }) => {
         </td>
       );
     default:
-      return <p {...attributes}>{children}</p>;
+      return <Typography {...attributes}>{children}</Typography>;
   }
 };
 

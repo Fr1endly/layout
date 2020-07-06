@@ -111,6 +111,12 @@ const CustomEditor = {
         return `<tr>${children}</tr>`;
       case "table-cell":
         return `<td>${children}</td>`;
+      case "bulleted-list":
+        return `<ul>${children}</ul>`;
+      case "numbered-list":
+        return `<ol>${children}</ol>`;
+      case "list-item":
+        return `<li>${children}</li>`;
       default:
         return children;
     }
