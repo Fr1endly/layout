@@ -65,11 +65,11 @@ export default connect(mapStateToProps, {
     const theme = useTheme();
     const [listOpen, setListOpen] = React.useState(false);
 
-    React.useEffect(() => {
-      setTimeout(() => {
-        fetchChapters();
-      }, 500);
-    }, [fetchChapters]);
+    // React.useEffect(() => {
+    //   setTimeout(() => {
+    //     fetchChapters();
+    //   }, 1000);
+    // }, [fetchChapters]);
 
     const handleClick = () => {
       setListOpen(!listOpen);

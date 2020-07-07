@@ -268,7 +268,6 @@ export default connect(mapStateToProps, { logout, openDrawer })(
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    className={classes.inputInput}
                     label="Search"
                     InputProps={{
                       ...params.InputProps,

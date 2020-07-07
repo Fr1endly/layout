@@ -5,6 +5,7 @@ import store from "./store";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { loadUser } from "./actions/auth";
+import { fetchChapters } from "./actions/ruleBook";
 import Header from "./components/layout/Header";
 import Content from "./components/Content";
 import Drawer from "./components/layout/Drawer";
@@ -31,6 +32,7 @@ export default () => {
       setAuthToken(localStorage.token);
     }
     store.dispatch(loadUser());
+    store.dispatch(fetchChapters());
   }, []);
 
   return (
